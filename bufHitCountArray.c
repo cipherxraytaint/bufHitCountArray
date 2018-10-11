@@ -20,10 +20,41 @@ BufHitCountAry_T newBufHitCountAry(u32 numBuf)
   return bufHitCountAry;
 }
 
+int updateBufHitCountAry(
+    BufHitCountAry_T bufHitCountAry,
+    u32 numBuf,
+    u32 srcBufID,
+    u32 dstBufID,
+    u8 hitCountByte)
+{
+  if(bufHitCountAry == NULL ||
+      srcBufID >= numBuf ||
+      dstBufID >= numBuf)
+    return -1;
+
+  HIT_COUNT_BYTE val = bufHitCountAry[srcBufID*numBuf + dstBufID];
+  if(val+hitCountByte <= MAX_HIT_COUNT) // if sum not exceed max
+    bufHitCountAry[srcBufID*numBuf + dstBufID] = val + hitCountByte;
+
+  return 0;
+}
+
 void delBufHitCountAry(BufHitCountAry_T *bufHitCountAry)
 {
   assert(bufHitCountAry);
   free(*bufHitCountAry);
   *bufHitCountAry = NULL;
   printf("del buffer hit count array:%p successful\n", *bufHitCountAry);
+}
+
+void printBufHitCountAry(
+    BufHitCountAry_T bufHitCountAry,
+    u32 numBuf)
+{
+  for(size_t r = 0; r < numBuf; r++) {
+    for (size_t c = 0; c < numBuf; c++) {
+      HIT_COUNT_BYTE val = bufHitCountAry[r*numBuf + c];
+      printf("2D buf hit count array[%zu][%zu]:%u\n", r, c, val);
+    }
+  }
 }
