@@ -15,7 +15,7 @@ main.o : main.c
 	$(CC) $(CF)	-c main.c 
 
 bufHitCountArray.o : bufHitCountArray.c
-	$(CC) $(CF) -c bufHitCountArray.o
+	$(CC) $(CF) -c bufHitCountArray.c
 
 clean	:
 	rm -rf *.o bufHitCountAry 
